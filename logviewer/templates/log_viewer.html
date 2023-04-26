@@ -1,0 +1,122 @@
+{% extends "admin/base_site.html" %}
+{% load static i18n %}
+{% block title %}Logs DumaSoft{% endblock %}
+{% load MenuTag %}
+
+{% block extrahead %}
+	<script src="{% static 'log_viewer/js/jquery.min.js' %}"></script>
+	<script src="{% static 'log_viewer/js/jquery.dataTables.min.js' %}"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+		<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+		&rsaquo;
+		<a href="{% url 'log_file_view' %}">
+			{% if custom_file_list_title %}
+				{{ custom_file_list_title }}
+			{% else %}
+				{% trans "Django Log Viewer" %}
+			{% endif %}
+		</a>
+	</div>
+{% endblock %}
+
+{% block header %}
+	{% general_menu %}
+{% endblock %}
+
+{% block content %}
+	<div class="django__log__viewer ">
+		<div id="content-main">
+			<div class="module filtered log--viewer" id="changelist">
+				<div id="changelist-form" class="changelist-form-container">
+					<div class="results">
+						<div class="headers">
+							<h1 class="pull-left">
+								{% if custom_file_list_title %}
+									{{ custom_file_list_title }}
+								{% else %}
+									{% trans "Django Log Viewer" %}
+								{% endif %}
+							</h1>
+							<div id="download-buttons" class="download-buttons" hidden>
+								<a href=""
+								   target="_blank"
+								   id="multiple-files"
+								   class="btn btn--primary">
+									<i class="fas fa-file-archive"></i>
+								</a>
+								<a href=""
+								   target="_blank"
+								   id="single-file"
+								   class="btn btn--primary">
+									<i class="fas fa-save"></i>
+								</a>
+								<button id="delete-file" class="btn btn--primary">
+									<i class="fas fa-trash-alt"></i>
+								</button>
+							</div>
+						</div>
+
+						<table id="result_list">
+							<thead>
+							<tr>
+								<th scope="col" class="action-checkbox-column">
+									<div class="text">
+                                        <span>
+                                            <input type="checkbox" id="action-toggle">
+                                        </span>
+									</div>
+									<div class="clear"></div>
+								</th>
+								<th scope="col" class="column-number">
+									<div class="text">No.</div>
+									<div class="clear"></div>
+								</th>
+								<th scope="col" class="column-level">
+									<div class="text">Nivel</div>
+									<div class="clear"></div>
+								</th>
+								<th scope="col" class="column-date">
+									<div class="text">Fecha</div>
+									<div class="clear"></div>
+								</th>
+								<th scope="col" class="column-message">
+									<div class="text">Mensajes</div>
+									<div class="clear"></div>
+								</th>
+							</tr>
+							</thead>
+							<tbody id="body-logs">
+							</tbody>
+						</table>
+					</div>
+
+					<p id="navigation-paginator" class="paginator"></p>
+					<div id="area-loading" class="area-loading"></div>
+				</div>
+				<div id="changelist-filter" data-items-per-page="{{ page_length }}">
+					<h2>Filtro archivos logs</h2>
+					<div>
+						<ul id="log-files-list" class="log_file_list"></ul>
+					</div>
+					<div id="filters_log" class="filters-log" hidden>
+						<h2>Filtros</h2>
+						<div>
+							<p>
+								<span class="label label--red" data-level="">TODOS</span>
+								<i class="fad fa-dot-circle"></i>
+							</p>
+							<p><span class="label label--red" data-level="critical">CRITICAL</span></p>
+							<p><span class="label label--brown" data-level="error">ERROR</span></p>
+							<p><span class="label label--yellow" data-level="warning">WARNING</span></p>
+							<p><span class="label label--blue" data-level="debug">DEBUG</span></p>
+							<p><span class="label label--green" data-level="info">INFO</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
