@@ -3,7 +3,7 @@ from ..views.TemplateLoginView import TemplateLoginView
 
 
 class LogViewerView(TemplateLoginView):
-	template_name = 'log_viewer.html'
+	template_name = 'log/log_viewer.html'
 
 	def get_context_data(self, filename=None, page=1, **kwargs):
 		"""
